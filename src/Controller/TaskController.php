@@ -22,9 +22,7 @@ class TaskController extends AbstractController
         $statuses = $task->getProject()->getStatuses();
         $employees = $task->getProject()->getEmployees();
         
-        //dd($statuses);
-
-        // Vérification si l'employé existe, sinon tu peux rediriger ou afficher une erreur
+        // Vérification si l'employé existe
         if (!$task) {
             throw $this->createNotFoundException('La tâche n\'a pas été trouvé');
         }
@@ -46,10 +44,7 @@ class TaskController extends AbstractController
                 // Si la suppression réussit, un message de succès est ajouté
                 $this->addFlash('success', 'Les informations ont été mis à jour avec succès.');
             } catch (\Exception $e) {
-                // En cas d'erreur, capturer le message de l'exception
-                $errorMessage = $e->getMessage();  // Récupère le message d'erreur spécifique
-        
-                // Ajouter un message flash avec le message d'erreur
+                $errorMessage = $e->getMessage();
                 $this->addFlash('error', 'Une erreur est survenue : ' . $errorMessage);
             }
 
