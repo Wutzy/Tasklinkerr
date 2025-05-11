@@ -43,7 +43,7 @@ class ProjectController extends AbstractController
             // On ajoute la tâche dans le tableau correspondant au statut
             $tasksByStatus[$status->getLibelle()][] = $task;
         }
-        //dd($tasksByStatus);
+
         return $this->render('project/detail.html.twig', [
             'project' => $project,
             'tasksByStatus' => $tasksByStatus,
