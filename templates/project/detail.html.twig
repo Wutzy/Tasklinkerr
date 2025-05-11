@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des projets - TaskLinker{% endblock %}
+
+{% block body %}
+         <main>
+            <header>
+               <div id="current-user"></div>
+               <div id="title-page">
+                    <div class="flex-header">
+                        <h1>{{ project.name }}</h1>
+                        <div class="user-list">
+                           {% for employee in employees %}
+                              <div class="avatar">{{ employee.firstName|slice(0, 1) }}{{ employee.lastName|slice(0, 1) }}</div>
+                           {% endfor %}
+                        </div>
+                        <a class="button" href="{{ path('app_project_edit', { 'id': project.id }) }}">Modifier</a>
+                    </div>
+               </div>
+            </header>
+            <div id="content">
+               {% for label, messages in app.flashes %}
+                     {% for message in messages %}
+                        <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+                           {{ message }}
+                           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
+                        </div>
+                     {% endfor %}
+               {% endfor %}
+               <div id="tasks-container">
+                  {% if tasksByStatus is empty %}
+                     <a href="{{ path('app_task_add', { 'id': project.id }) }}" class="task-add cbtn btn-primary">
+                        + Ajouter une tâche
+                     </a>
+                  {% endif %}
+                  {% for key, tasks in tasksByStatus %}
+                     <div class="task-column">
+                           <h2>{{ key }}</h2>
+                           <div class="tasks-list">
+                           {% for task in tasks %}
+                              <a class="task" href="{{ path('app_task_edit', { 'id': task.id }) }}">
+                                 <h3>{{ task.title }}</h3>
+                                 <p>{{ task.description }}</p>
+                                 <div class="task-infos">
+                                    <div class="task-deadline">
+                                       <i class="fa-regular fa-calendar"></i>{{ task.deadlineAt|date("d/m/Y") }}
+                                    </div>
+                                 </div>
+                                 {% if task.employee %}                                    
+                                    <div class="mini-user">
+                                       {{ task.employee.firstName|slice(0, 1) }}{{ task.employee.lastName|slice(0, 1) }}
+                                    </div>   
+                                 {% endif %}                                                           
+                              </a>
+                           {% endfor %}
+                              <a href="{{ path('app_task_add', { 'id': project.id }) }}" class="task-add">
+                              + Ajouter une tâche
+                              </a>
+                           </div>
+                     </div>
+                  {% endfor %}
+               </div>
+            </div>
+         </main>
+{% endblock %}

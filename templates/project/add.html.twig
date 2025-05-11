@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Création Projet - TaskLinker{% endblock %}
+
+{% block body %}
+    <main>
+        <header>
+            <div id="current-user"></div>
+            <div id="title-page">
+                <h1>Ajouter un projet</h1>
+            </div>
+        </header>
+        <div id="content">
+            {{ form_start(form) }}
+            {{ form_errors(form)}}
+                {{ form_widget(form) }}
+                <button type="submit" class="button button-submit">Continuer</button>
+            {{ form_end(form) }}
+        </div>
+    </main>
+{% endblock %}
